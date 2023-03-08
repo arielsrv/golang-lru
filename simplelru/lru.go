@@ -6,10 +6,10 @@ import (
 	"time"
 )
 
-// EvictCallback is used to get a callback when a cache entry is evicted
+// EvictCallback is used to get a callback when a cache entry is evicted.
 type EvictCallback func(key interface{}, value interface{})
 
-// LRU implements a non-thread safe fixed size LRU cache
+// LRU implements a non-thread safe fixed size LRU cache.
 type LRU struct {
 	size      int
 	evictList *list.List
@@ -18,7 +18,7 @@ type LRU struct {
 	onEvict   EvictCallback
 }
 
-// entry is used to hold a value in the evictList
+// entry is used to hold a value in the evictList.
 type entry struct {
 	key    interface{}
 	value  interface{}
@@ -32,7 +32,7 @@ func (e *entry) IsExpired() bool {
 	return time.Now().After(*e.expire)
 }
 
-// NewLRU constructs an LRU of the given size
+// NewLRU constructs an LRU of the given size.
 func NewLRU(size int, onEvict EvictCallback) (*LRU, error) {
 	if size <= 0 {
 		return nil, errors.New("Must provide a positive size")
@@ -47,7 +47,7 @@ func NewLRU(size int, onEvict EvictCallback) (*LRU, error) {
 	return c, nil
 }
 
-// NewLRUWithExpire contrusts an LRU of the given size and expire time
+// NewLRUWithExpire contrusts an LRU of the given size and expire time.
 func NewLRUWithExpire(size int, expire time.Duration, onEvict EvictCallback) (*LRU, error) {
 	if size <= 0 {
 		return nil, errors.New("Must provide a positive size")
@@ -62,7 +62,7 @@ func NewLRUWithExpire(size int, expire time.Duration, onEvict EvictCallback) (*L
 	return c, nil
 }
 
-// Purge is used to completely clear the cache
+// Purge is used to completely clear the cache.
 func (c *LRU) Purge() {
 	for k, v := range c.items {
 		if c.onEvict != nil {
@@ -174,7 +174,7 @@ func (c *LRU) RemoveOldest() (interface{}, interface{}, bool) {
 	return nil, nil, false
 }
 
-// GetOldest returns the oldest entry
+// GetOldest returns the oldest entry.
 func (c *LRU) GetOldest() (interface{}, interface{}, bool) {
 	ent := c.evictList.Back()
 	if ent != nil {
@@ -201,7 +201,7 @@ func (c *LRU) Len() int {
 }
 
 // Resize changes the cache size.
-func (c *LRU) Resize(size int) (evicted int) {
+func (c *LRU) Resize(size int) int {
 	diff := c.Len() - size
 	if diff < 0 {
 		diff = 0
@@ -221,7 +221,7 @@ func (c *LRU) removeOldest() {
 	}
 }
 
-// removeElement is used to remove a given list element from the cache
+// removeElement is used to remove a given list element from the cache.
 func (c *LRU) removeElement(e *list.Element) {
 	c.evictList.Remove(e)
 	kv := e.Value.(*entry)

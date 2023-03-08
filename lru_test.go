@@ -72,7 +72,7 @@ func TestLRU(t *testing.T) {
 		if k != v {
 			t.Fatalf("Evict values not equal (%v!=%v)", k, v)
 		}
-		evictCounter += 1
+		evictCounter++
 	}
 	l, err := NewWithEvict(128, onEvicted)
 	if err != nil {
@@ -132,11 +132,11 @@ func TestLRU(t *testing.T) {
 	}
 }
 
-// test that Add returns true/false if an eviction occurred
+// test that Add returns true/false if an eviction occurred.
 func TestLRUAdd(t *testing.T) {
 	evictCounter := 0
 	onEvicted := func(k interface{}, v interface{}) {
-		evictCounter += 1
+		evictCounter++
 	}
 
 	l, err := NewWithEvict(1, onEvicted)
@@ -152,7 +152,7 @@ func TestLRUAdd(t *testing.T) {
 	}
 }
 
-// test that Contains doesn't update recent-ness
+// test that Contains doesn't update recent-ness.
 func TestLRUContains(t *testing.T) {
 	l, err := New(2)
 	if err != nil {
@@ -171,7 +171,7 @@ func TestLRUContains(t *testing.T) {
 	}
 }
 
-// test that Contains doesn't update recent-ness
+// test that Contains doesn't update recent-ness.
 func TestLRUContainsOrAdd(t *testing.T) {
 	l, err := New(2)
 	if err != nil {
@@ -201,7 +201,7 @@ func TestLRUContainsOrAdd(t *testing.T) {
 	}
 }
 
-// test that Peek doesn't update recent-ness
+// test that Peek doesn't update recent-ness.
 func TestLRUPeek(t *testing.T) {
 	l, err := New(2)
 	if err != nil {

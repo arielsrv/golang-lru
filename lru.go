@@ -1,4 +1,4 @@
-// This package provides a simple LRU cache. It is based on the
+// Package lru This package provides a simple LRU cache. It is based on the
 // LRU implementation in groupcache:
 // https://github.com/golang/groupcache/tree/master/lru
 package lru
@@ -16,7 +16,7 @@ type Cache struct {
 	lock sync.RWMutex
 }
 
-// New creates an LRU of the given size
+// New creates an LRU of the given size.
 func New(size int) (*Cache, error) {
 	return NewWithEvict(size, nil)
 }
@@ -34,7 +34,7 @@ func NewWithEvict(size int, onEvicted func(key interface{}, value interface{})) 
 	return c, nil
 }
 
-// NewWithExpire constructs a fixed size cache with expire feature
+// NewWithExpire constructs a fixed size cache with expire feature.
 func NewWithExpire(size int, expire time.Duration) (*Cache, error) {
 	lru, err := simplelru.NewLRUWithExpire(size, expire, nil)
 	if err != nil {
@@ -46,7 +46,7 @@ func NewWithExpire(size int, expire time.Duration) (*Cache, error) {
 	return c, nil
 }
 
-// Purge is used to completely clear the cache
+// Purge is used to completely clear the cache.
 func (c *Cache) Purge() {
 	c.lock.Lock()
 	c.lru.Purge()
@@ -93,7 +93,7 @@ func (c *Cache) Peek(key interface{}) (interface{}, bool) {
 // ContainsOrAdd checks if a key is in the cache  without updating the
 // recent-ness or deleting it for being stale,  and if not, adds the value.
 // Returns whether found and whether an eviction occurred.
-func (c *Cache) ContainsOrAdd(key, value interface{}) (ok, evict bool) {
+func (c *Cache) ContainsOrAdd(key, value interface{}) (bool, bool) {
 	c.lock.Lock()
 	defer c.lock.Unlock()
 

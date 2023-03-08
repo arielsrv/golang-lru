@@ -11,7 +11,7 @@ func TestLRU(t *testing.T) {
 		if k != v {
 			t.Fatalf("Evict values not equal (%v!=%v)", k, v)
 		}
-		evictCounter += 1
+		evictCounter++
 	}
 	l, err := NewLRU(128, onEvicted)
 	if err != nil {
@@ -111,11 +111,11 @@ func TestLRU_GetOldest_RemoveOldest(t *testing.T) {
 	}
 }
 
-// Test that Add returns true/false if an eviction occurred
+// Test that Add returns true/false if an eviction occurred.
 func TestLRU_Add(t *testing.T) {
 	evictCounter := 0
 	onEvicted := func(k interface{}, v interface{}) {
-		evictCounter += 1
+		evictCounter++
 	}
 
 	l, err := NewLRU(1, onEvicted)
@@ -131,7 +131,7 @@ func TestLRU_Add(t *testing.T) {
 	}
 }
 
-// Test that Contains doesn't update recent-ness
+// Test that Contains doesn't update recent-ness.
 func TestLRU_Contains(t *testing.T) {
 	l, err := NewLRU(2, nil)
 	if err != nil {
@@ -150,7 +150,7 @@ func TestLRU_Contains(t *testing.T) {
 	}
 }
 
-// Test that Peek doesn't update recent-ness
+// Test that Peek doesn't update recent-ness.
 func TestLRU_Peek(t *testing.T) {
 	l, err := NewLRU(2, nil)
 	if err != nil {
@@ -169,7 +169,7 @@ func TestLRU_Peek(t *testing.T) {
 	}
 }
 
-// Test that expire feature
+// Test that expire feature.
 func TestLRU_Expire(t *testing.T) {
 	l, err := NewLRUWithExpire(2, 2*time.Second, nil)
 	if err != nil {
@@ -197,7 +197,7 @@ func TestLRU_Expire(t *testing.T) {
 	}
 }
 
-// Test that Resize can upsize and downsize
+// Test that Resize can upsize and downsize.
 func TestLRU_Resize(t *testing.T) {
 	onEvictCounter := 0
 	onEvicted := func(k interface{}, v interface{}) {

@@ -14,7 +14,7 @@ const (
 	Default2QRecentRatio = 0.25
 
 	// Default2QGhostEntries is the default ratio of ghost
-	// entries kept to track entries recently evicted
+	// entries kept to track entries recently evicted.
 	Default2QGhostEntries = 0.50
 )
 
@@ -112,7 +112,7 @@ func (c *TwoQueueCache) Get(key interface{}) (interface{}, bool) {
 		c.recent.Remove(key)
 		var expireDuration time.Duration
 		if expire != nil {
-			expireDuration = expire.Sub(time.Now())
+			expireDuration = time.Until(*expire)
 			if expireDuration < 0 {
 				return nil, false
 			}
@@ -163,7 +163,7 @@ func (c *TwoQueueCache) AddEx(key, value interface{}, expire time.Duration) {
 	return
 }
 
-// ensureSpace is used to ensure we have space in the cache
+// ensureSpace is used to ensure we have space in the cache.
 func (c *TwoQueueCache) ensureSpace(recentEvict bool) {
 	// If we have space, nothing to do
 	recentLen := c.recent.Len()

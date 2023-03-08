@@ -268,7 +268,7 @@ func Test2Q(t *testing.T) {
 	}
 }
 
-// Test that Contains doesn't update recent-ness
+// Test that Contains doesn't update recent-ness.
 func Test2Q_Contains(t *testing.T) {
 	l, err := New2Q(2)
 	if err != nil {
@@ -287,7 +287,7 @@ func Test2Q_Contains(t *testing.T) {
 	}
 }
 
-// Test that Peek doesn't update recent-ness
+// Test that Peek doesn't update recent-ness.
 func Test2Q_Peek(t *testing.T) {
 	l, err := New2Q(2)
 	if err != nil {
@@ -306,7 +306,7 @@ func Test2Q_Peek(t *testing.T) {
 	}
 }
 
-// Test that values expire as expected
+// Test that values expire as expected.
 func Test2Q_Expire(t *testing.T) {
 	l, err := New2Q(100)
 	if err != nil {

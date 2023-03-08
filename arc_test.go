@@ -7,7 +7,7 @@ import (
 )
 
 func init() {
-	rand.Seed(time.Now().Unix())
+	rand.New(rand.NewSource(time.Now().Unix()))
 }
 
 func BenchmarkARC_Rand(b *testing.B) {
@@ -338,7 +338,7 @@ func TestARC(t *testing.T) {
 	}
 }
 
-// Test that Contains doesn't update recent-ness
+// Test that Contains doesn't update recent-ness.
 func TestARC_Contains(t *testing.T) {
 	l, err := NewARC(2)
 	if err != nil {
@@ -357,7 +357,7 @@ func TestARC_Contains(t *testing.T) {
 	}
 }
 
-// Test that Peek doesn't update recent-ness
+// Test that Peek doesn't update recent-ness.
 func TestARC_Peek(t *testing.T) {
 	l, err := NewARC(2)
 	if err != nil {

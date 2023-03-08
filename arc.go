@@ -28,12 +28,12 @@ type ARCCache struct {
 	lock sync.RWMutex
 }
 
-// NewARC creates an ARC of the given size
+// NewARC creates an ARC of the given size.
 func NewARC(size int) (*ARCCache, error) {
 	return NewARCWithExpire(size, 0)
 }
 
-// NewARCWithExpire creates an ARC of the given size
+// NewARCWithExpire creates an ARC of the given size.
 func NewARCWithExpire(size int, expire time.Duration) (*ARCCache, error) {
 	// Create the sub LRUs
 	b1, err := simplelru.NewLRUWithExpire(size, expire, nil)
@@ -188,7 +188,7 @@ func (c *ARCCache) AddEx(key, value interface{}, expire time.Duration) {
 }
 
 // replace is used to adaptively evict from either T1 or T2
-// based on the current learned value of P
+// based on the current learned value of P.
 func (c *ARCCache) replace(b2ContainsKey bool) {
 	t1Len := c.t1.Len()
 	if t1Len > 0 && (t1Len > c.p || (t1Len == c.p && b2ContainsKey)) {
@@ -204,14 +204,14 @@ func (c *ARCCache) replace(b2ContainsKey bool) {
 	}
 }
 
-// Len returns the number of cached entries
+// Len returns the number of cached entries.
 func (c *ARCCache) Len() int {
 	c.lock.RLock()
 	defer c.lock.RUnlock()
 	return c.t1.Len() + c.t2.Len()
 }
 
-// Keys returns all the cached keys
+// Keys returns all the cached keys.
 func (c *ARCCache) Keys() []interface{} {
 	c.lock.RLock()
 	defer c.lock.RUnlock()
@@ -220,7 +220,7 @@ func (c *ARCCache) Keys() []interface{} {
 	return append(k1, k2...)
 }
 
-// Remove is used to purge a key from the cache
+// Remove is used to purge a key from the cache.
 func (c *ARCCache) Remove(key interface{}) {
 	c.lock.Lock()
 	defer c.lock.Unlock()
@@ -238,7 +238,7 @@ func (c *ARCCache) Remove(key interface{}) {
 	}
 }
 
-// Purge is used to clear the cache
+// Purge is used to clear the cache.
 func (c *ARCCache) Purge() {
 	c.lock.Lock()
 	defer c.lock.Unlock()
