@@ -1,3 +1,3 @@
-module github.com/hnlq715/golang-lru
+module github.com/arielsrv/golang-lru
 
 go 1.20
