@@ -18,7 +18,7 @@ jobs:
         with:
           go-version-file: 'go.mod'
           check-latest: true
-          cache: true
+          #cache: true
           #cache-dependency-path: go.sum
 
       - name: arduino/setup-task
